@@ -50,7 +50,7 @@ def test_api(item: Inputs):
         print(e)
         try:
             with mutex:
-                output = model.annotate_text(text)
+                output = model.annotate_text(text[:2000])
                 res = {"sentences" :[
                   [
                    {
