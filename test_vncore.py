@@ -48,9 +48,11 @@ def test_api(item: Inputs):
             ]}
     except Exception as e: 
         print(e)
-        output = model.annotate_text(text[:2000])
-        res = {"sentences" :[
-               [
+        try:
+            with mutex:
+                output = model.annotate_text(text)
+                res = {"sentences" :[
+                  [
                    {
                     "index": word['index'],
                     "form": word['wordForm'],
@@ -60,9 +62,10 @@ def test_api(item: Inputs):
                     'depLabel': word['depLabel']
                    }
                    for word in output[sentence]
-               ] for sentence in output
-        ]}
-        return res
+                  ] for sentence in output
+                ]}
+        except Exception as e: 
+            return e
 
 
     return res
